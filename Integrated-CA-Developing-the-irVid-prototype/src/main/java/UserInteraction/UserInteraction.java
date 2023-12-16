@@ -1,3 +1,7 @@
+/**
+ *
+ * @author lucas
+ */
 package UserInteraction;
 
 import com.EirVid.movierent.MenuManager;
