@@ -74,3 +74,43 @@ public class MovieManager {
             }
         }
     }
+    // Method to rent a movie
+    public void rentMovie(User user, String movieTitle) {
+        Movie movie = movies.get(movieTitle);
+        if (movie != null && movie.isAvailable()) {
+            user.addMovie(movie);
+            user.addMovieHistoric(movie);
+            movie.setAvailable(false);  // Mark as not available
+            movie.setRentedTime(new Date());  // Record the rental time
+
+            // Add the movie's price to the user's charged amount
+            user.increaseChargedAmount(movie.getPrice());
+
+            rentedMoviesLog.put(movie.getTitle(), movie.getRentedTime());
+
+            System.out.println("Movie rented successfully!");
+        } else {
+            System.out.println("Movie not found or already rented. Please check the title and try again.");
+        }
+    }
+
+    // Static method to display the top 5 rented movies of the last 5 minutes
+    public static void displayTopMovies() {
+        Date now = new Date();
+
+        List<String> last5MinutesLog = rentedMoviesLog.entrySet().stream()
+                .filter(entry -> {
+                    Date rentedTime = entry.getValue();
+                    // Check if the record is less than 5 minutes old
+                    return now.getTime() - rentedTime.getTime() < TimeUnit.MINUTES.toMillis(5);
+                })
+                .map(entry -> String.format("Movie: %s", entry.getKey()))
+                .collect(Collectors.toList());
+
+        System.out.println("Top 5 movies rented in the last 5 minutes:");
+        last5MinutesLog.forEach(System.out::println);
+    }
+
+    // Add other relevant methods for movie management
+}
+
