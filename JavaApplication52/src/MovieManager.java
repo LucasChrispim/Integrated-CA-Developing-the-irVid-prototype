@@ -57,3 +57,20 @@ public class MovieManager {
             System.out.printf("%-30s $%.2f\n", movie.getTitle(), movie.getPrice());
         }
     }
+     // Method to check and restore the availability of movies
+    public void checkAndRestoreAvailability(Map<String, User> users) {
+        // Check and restore the availability of movies
+        Date now = new Date();
+        for (Movie movie : movies.values()) {
+            if (!movie.isAvailable() && (now.getTime() - movie.getRentedTime().getTime()) >= TimeUnit.MINUTES.toMillis(1)) {
+                movie.setAvailable(true);
+
+                // Remove the movie from the rented movies list of all users
+                for (User user : users.values()) {
+                    if (user.getRentedMovies().contains(movie)) {
+                        user.removeRentedMovie(movie);
+                    }
+                }
+            }
+        }
+    }
