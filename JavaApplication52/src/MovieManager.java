@@ -24,3 +24,20 @@ public class MovieManager {
 
     public Map<String, Date> getRentedMoviesLog(){
         return rentedMoviesLog;
+         }
+
+    // Method to load movies from a CSV file
+    public void loadMoviesFromCSV(String filename) {
+        // Read lines from the file
+        List<String> lines = fileManager.readLines(filename);
+
+        for (String line : lines) {
+            // Split the line into parts
+            String[] parts = line.split(",");
+            String title = parts[0];
+            double price = Double.parseDouble(parts[1]);
+            // Add the movie to the map
+            movies.put(title, new Movie(title, price));
+        }
+    }
+
