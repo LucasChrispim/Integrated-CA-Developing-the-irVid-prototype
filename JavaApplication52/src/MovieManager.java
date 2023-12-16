@@ -40,4 +40,20 @@ public class MovieManager {
             movies.put(title, new Movie(title, price));
         }
     }
+// Method to display the list of available movies
+    public void displayMovieList() {
+        System.out.println("\n--- List of Available Movies ---");
+        System.out.printf("%-30s %-10s\n", "Movie Title", "Price");
 
+        List<Movie> availableMovies = new ArrayList<>(movies.values());
+        // Remove unavailable movies
+        availableMovies.removeIf(movie -> !movie.isAvailable());
+
+        // Sort the list of movies by title
+        Collections.sort(availableMovies, Comparator.comparing(Movie::getTitle));
+
+        // Display the available movies
+        for (Movie movie : availableMovies) {
+            System.out.printf("%-30s $%.2f\n", movie.getTitle(), movie.getPrice());
+        }
+    }
