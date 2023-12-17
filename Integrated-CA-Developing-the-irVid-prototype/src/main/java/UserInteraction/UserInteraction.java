@@ -33,7 +33,7 @@ public class UserInteraction {
             switch (choice) {
                 case 1 -> {
                     movieManager.displayMovieList();
-                    System.out.print("\nEnter the title of the movie you want to rent: ");
+                    System.out.print("\nEnter the title of the movie you want to rent(tipe the exact name of the movie): ");
                     String movieTitle = scanner.nextLine();
                     movieManager.rentMovie(user, movieTitle);
                 }

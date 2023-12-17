@@ -28,7 +28,7 @@ public class MovieRent {
         userManager = new UserManager();
         
         // Load movies from CSV file
-        movieManager.loadMoviesFromCSV("resources/movies.csv");
+        movieManager.loadMoviesFromCSV("resources/Movie_Metadata.csv");
 
         // Schedule a task to check and restore the availability of movies every 5 seconds
         scheduler.scheduleAtFixedRate(() -> movieManager.checkAndRestoreAvailability(userManager.getUsers()),
